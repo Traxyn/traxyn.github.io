@@ -70,6 +70,7 @@ const pixels = new Uint8Array([
 ]);
 
 const vertexBuffer = gl.createBuffer();
+
 gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, vertexBufferData, gl.STATIC_DRAW);
 gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
@@ -81,6 +82,14 @@ gl.bufferData(gl.ARRAY_BUFFER, texCoordBufferData, gl.STATIC_DRAW);
 gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 0, 0);
 gl.enableVertexAttribArray(1);
 
+gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
+const pixelTextureUnit = 0;
+const kittenTextureUnit = 5;
+
+gl.uniform1i(gl.getUniformLocation(program, 'uPixelSampler'), pixelTextureUnit);
+gl.uniform1i(gl.getUniformLocation(program, 'uKittenSampler'), kittenTextureUnit);
+
 const loadImage = () => new Promise(resolve => {
 	const image = new Image();
 	image.addEventListener('load', () => resolve(image));
@@ -90,13 +99,7 @@ const loadImage = () => new Promise(resolve => {
 const run = async () => {
     const image = await loadImage(); 
 
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-
-    const pixelTextureUnit = 0;
-    const kittenTextureUnit = 5;
-
-    gl.uniform1i(gl.getUniformLocation(program, 'uPixelSampler'), pixelTextureUnit);
-    gl.uniform1i(gl.getUniformLocation(program, 'uKittenSampler'), kittenTextureUnit);
+    gl.generateMipmap(gl.TEXTURE_2D);
 
     const pixelTexture = gl.createTexture();
     gl.activateTexture(gl.TEXTURE0 + pixelTextureUnit);
@@ -110,7 +113,7 @@ const run = async () => {
     gl.bindTexture(gl.TEXTURE_2D, kittenTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 500, 300, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
