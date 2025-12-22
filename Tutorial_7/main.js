@@ -22,7 +22,7 @@ void main() {
     fragColor = vColor;
 }`;
 
-const canvas = document.querySelector('canvas').getContext('webgl2');
+const gl = document.querySelector('canvas').getContext('webgl2');
 
 const program = gl.createProgram();
 
