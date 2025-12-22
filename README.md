@@ -17,5 +17,6 @@ Eventually, I will hopefully turn this expirience into something cool.
 <li><a href="/Tutorial_4">Tutorial 4</a></li>
 <li><a href="/Tutorial_5">Tutorial 5</a></li>
 <li><a href="/Tutorial_6">Tutorial 6</a></li>
+<li><a href="/Tutorial_7">Tutorial 7</a></li>
 </ul>
 </details>
