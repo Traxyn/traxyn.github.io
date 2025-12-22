@@ -16,12 +16,13 @@ precision mediump float;
 
 in vec2 vTexCoord;
 
-uniform sampler2D uSampler;
+uniform sampler2D uPixelSampler;
+uniform sampler2D uKittenSampler;
 
 out vec4 fragColor;
 
 void main() {
-    fragColor = texture(uSampler, vTexCoord);
+    fragColor = texture(uPixelSampler, vTexCoord) * texture(uKittenSampler, vTexCoord);
 }`;
 
 const gl = document.querySelector('canvas').getContext('webgl2');
@@ -91,11 +92,23 @@ const run = async () => {
 
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-    const texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 500, 300, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
+    const pixelTextureUnit = 0;
+    const kittenTextureUnit = 5;
 
-    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.uniform1i(gl.getUniformLocation(program, 'uPixelSampler'), pixelTextureUnit);
+    gl.uniform1i(gl.getUniformLocation(program, 'uKittenSampler'), kittenTextureUnit);
+
+    const pixelTexture = gl.createTexture();
+    gl.activateTexture(gl.TEXTURE0 + pixelTextureUnit);
+    gl.bindTexture(gl.TEXTURE_2D, pixelTexture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 4, 4, 0, gl.RGB, gl.UNSIGNED_BYTE, pixels);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+    const kittenTexture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE0 + kittenTextureUnit);
+    gl.bindTexture(gl.TEXTURE_2D, kittenTexture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 500, 300, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
