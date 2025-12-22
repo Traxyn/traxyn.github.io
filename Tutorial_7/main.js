@@ -47,7 +47,7 @@ if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
 
 gl.useProgram(program);
 
-const bufferData = new Float32Array([
+const data1 = new Float32Array([
     -.8,.6,     1,.75,.75,      125,
     -.3,.6,     0,.75,1,        32,
     .3,.6,      .5,1,.75,       75,
