@@ -99,21 +99,18 @@ const loadImage = () => new Promise(resolve => {
 const run = async () => {
     const image = await loadImage(); 
 
-    gl.generateMipmap(gl.TEXTURE_2D);
-
     const pixelTexture = gl.createTexture();
-    gl.activateTexture(gl.TEXTURE0 + pixelTextureUnit);
+    gl.activeTexture(gl.TEXTURE0 + pixelTextureUnit);
     gl.bindTexture(gl.TEXTURE_2D, pixelTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 4, 4, 0, gl.RGB, gl.UNSIGNED_BYTE, pixels);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
     const kittenTexture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE0 + kittenTextureUnit);
+    gl.activeTexture(gl.TEXTURE0 + kittenTextureUnit);
     gl.bindTexture(gl.TEXTURE_2D, kittenTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 500, 300, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    //gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 };
