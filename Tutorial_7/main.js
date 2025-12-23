@@ -93,10 +93,15 @@ gl.enableVertexAttribArray(2);
 
 gl.bindVertexArray(null);
 
-gl.bindVertexArray(vao1);
-gl.drawArrays(gl.POINTS, 0, 4);
-gl.bindVertexArray(null);
+const draw = () => {
+    gl.bindVertexArray(vao1);
+    gl.drawArrays(gl.POINTS, 0, 4);
+    gl.bindVertexArray(null);
+    gl.bindVertexArray(vao2);
+    gl.drawArrays(gl.POINTS, 0, 4);
+    gl.bindVertexArray(null);
 
-gl.bindVertexArray(vao2);
-gl.drawArrays(gl.POINTS, 0, 4);
-gl.bindVertexArray(null);
+    requestAnimationFrame(draw);
+}
+
+draw();
