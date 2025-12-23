@@ -19,7 +19,7 @@ in vec3 vColor;
 out vec4 fragColor;
 
 void main() {
-    fragColor = vColor;
+    fragColor = vec4(vColor, 1.0);
 }`;
 
 const gl = document.querySelector('canvas').getContext('webgl2');
