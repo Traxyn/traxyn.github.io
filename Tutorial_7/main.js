@@ -57,6 +57,9 @@ const buffer1 = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, buffer1);
 gl.bufferData(gl.ARRAY_BUFFER, data1, gl.STATIC_DRAW);
 
+const vao1 = gl.createVertexArray();
+gl.bindVertexArray(vao1);
+
 gl.vertexAttribPointer(0, 1, gl.FLOAT, false, 24, 20);
 gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 24, 0);
 gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 24, 8);
@@ -65,7 +68,7 @@ gl.enableVertexAttribArray(0);
 gl.enableVertexAttribArray(1);
 gl.enableVertexAttribArray(2);
 
-gl.drawArrays(gl.POINTS, 0, 4);
+gl.bindVertexArray(null);
 
 const data2 = new Float32Array([
     -.8,-.6,     .25,0,0,       25,
@@ -77,8 +80,23 @@ const buffer2 = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
 gl.bufferData(gl.ARRAY_BUFFER, data2, gl.STATIC_DRAW);
 
+const vao2 = gl.createVertexArray();
+gl.bindVertexArray(vao2);
+
 gl.vertexAttribPointer(0, 1, gl.FLOAT, false, 24, 20);
 gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 24, 0);
 gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 24, 8);
 
+gl.enableVertexAttribArray(0);
+gl.enableVertexAttribArray(1);
+gl.enableVertexAttribArray(2);
+
+gl.bindVertexArray(null);
+
+gl.bindVertexArray(vao1);
 gl.drawArrays(gl.POINTS, 0, 4);
+gl.bindVertexArray(null);
+
+gl.bindVertexArray(vao2);
+gl.drawArrays(gl.POINTS, 0, 4);
+gl.bindVertexArray(null);
