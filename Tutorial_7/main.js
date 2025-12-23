@@ -1,7 +1,7 @@
 const vertexShaderSource = `#version 300 es
 
 layout(location=0) in float aPointSize;
-layout(location=1) in vec4 aPosition;
+layout(location=1) in vec2 aPosition;
 layout(location=2) in vec3 aColor;
 
 out vec3 vColor;
