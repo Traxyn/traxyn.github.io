@@ -66,3 +66,19 @@ gl.enableVertexAttribArray(1);
 gl.enableVertexAttribArray(2);
 
 gl.drawArrays(gl.POINTS, 0, 4);
+
+const data2 = new Float32Array([
+    -.8,-.6,     .25,0,0,       25,
+    -.3,-.6,     0,0,.25,       132,
+    .3,-.6,      0,.25,0,       105,
+    .6,-.6,      .25,0,.25,     90,
+]);
+const buffer2 = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
+gl.bufferData(gl.ARRAY_BUFFER, data2, gl.STATIC_DRAW);
+
+gl.vertexAttribPointer(0, 1, gl.FLOAT, false, 24, 20);
+gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 24, 0);
+gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 24, 8);
+
+gl.drawArrays(gl.POINTS, 0, 4);
